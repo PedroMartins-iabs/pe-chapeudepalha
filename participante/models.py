@@ -2,9 +2,9 @@ from django.db import models
 
 from core.choices import(
     GRAU_ESCOLARIDADE,TURNO_ATIVIDADE_ESCOLAR,RACA,
-    TIPOS_DEFICIENCIA,SEXO,SITUACAO)
+    TIPOS_DEFICIENCIA,SEXO)
 
-from core.models import Cidade, Bairro
+from core.models import Cidade, Bairro,ProgramaChapeuAnual
 
 class Participante(models.Model):
     municipio = models.ForeignKey(Cidade, models.DO_NOTHING)
@@ -141,13 +141,14 @@ class Participante(models.Model):
     # sincronizado = models.BooleanField(blank=True, null=True)
     # apresentoucertificadocursoindicado = models.BooleanField(blank=True, null=True)
 
-
-
 class Formulario(models.Model):
 
     participante = models.ForeignKey(
         Participante,
         on_delete=models.DO_NOTHING)
+
+    programa_chapeu_anual = models.ForeignKey(ProgramaChapeuAnual,on_delete=models.DO_NOTHING)
+
 
     posto_cadastramento = models.ForeignKey(
         PostoCadastramento,
@@ -214,7 +215,6 @@ class Formulario(models.Model):
 
     ##Campos descartados##
 
-    #fk_idprogramachapeuanual = models.ForeignKey('Tblprogramachapeuanual', models.DO_NOTHING, db_column='fk_idprogramachapeuanual')
     #fk_idselamento = models.CharField(max_length=50, blank=True, null=True)
     #naoencontradocaixaposfolha = models.IntegerField(blank=True, null=True)
     #idformulariocana14 = models.BigIntegerField(blank=True, null=True)
@@ -248,7 +248,7 @@ class Indicado(models.Model):
     )
 
     telefone = models.CharField(
-        max_length=50, blank=True, null=True)a
+        max_length=50, blank=True, null=True)
 
     celular = models.CharField(
         max_length=15, blank=True, null=True)

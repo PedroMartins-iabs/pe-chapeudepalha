@@ -37,19 +37,6 @@ SEXO = (
     (2, ("F"))
 )
 
-SITUACAO = (
-    (1,	("Digitados")),
-    (2, ("Alterados")),
-    (3,	("Rejeitados")),
-    (4,	("Finalizados")),
-    (5,	("Pré-selecionados")),
-    (6,	("Enviados Caixa")),
-    (7,	("Beneficiários")),
-    (8,	("Suspensos")),
-    (9, ("Cancelados")),
-    (10,("Solicitação de cancelamento de suspensão")),
-    (11,("Cancelado por solicitação do Cadastrado"))
-)
 
 
 
