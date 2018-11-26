@@ -33,7 +33,7 @@ TIPOS_DEFICIENCIA = (
 )
 
 SEXO = (
-    (1, ("M"))
+    (1, ("M")),
     (2, ("F"))
 )
 

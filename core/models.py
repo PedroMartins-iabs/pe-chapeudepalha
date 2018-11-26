@@ -1,5 +1,13 @@
 from django.db import models
 
+class Status(models.Model):
+    tabela = models.CharField(max_length=100)
+    chave  = models.CharField(max_length=100)
+    texto  = models.CharField(max_length=200)
+    valor  = models.IntegerField()
+    parent = models.IntegerField(default=0)
+    ordem = models.IntegerField(default=0)
+    label_code= models.IntegerField(default=0)
 
 class Uf(models.Model):
     sigla = models.CharField(max_length=50)
@@ -47,8 +55,8 @@ class ProgramaChapeuAnual(models.Model):
     ano_referencia = models.CharField(max_length=5)
     data_inicio_programa = models.DateTimeField()
     data_fim_programa = models.DateTimeField()
-    usuario_alteracao = models.ForeignKey(
-        Usuario, models.DO_NOTHING)
+    #usuario_alteracao = models.ForeignKey(
+    #    Usuario, models.DO_NOTHING)
     data_alteracao = models.DateTimeField()
     status = models.ForeignKey(Status,on_delete=models.DO_NOTHING)
 
@@ -64,8 +72,8 @@ class PostoCadastramento(models.Model):
     cidade = models.ForeignKey(
         Cidade,on_delete=models.DO_NOTHING)
 
-    responsavel = models.ForeignKey(
-        Usuario,on_delete=models.DO_NOTHING, blank=True, null=True)
+    #responsavel = models.ForeignKey(
+    #    Usuario,on_delete=models.DO_NOTHING, blank=True, null=True)
 
     status = models.ForeignKey(Status,on_delete=models.DO_NOTHING)
 
