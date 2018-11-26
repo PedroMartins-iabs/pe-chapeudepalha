@@ -2,9 +2,10 @@ from django.db import models
 
 from core.choices import(
     GRAU_ESCOLARIDADE,TURNO_ATIVIDADE_ESCOLAR,RACA,
-    TIPOS_DEFICIENCIA,SEXO,SITUACAO)
+    TIPOS_DEFICIENCIA,SEXO)
 
-from core.models import Cidade, Bairro
+from core.models import(
+    Cidade, Bairro,ProgramaChapeuAnual,Status,PostoCadastramento)
 
 class Participante(models.Model):
     municipio = models.ForeignKey(Cidade, models.DO_NOTHING)
@@ -141,41 +142,50 @@ class Participante(models.Model):
     # sincronizado = models.BooleanField(blank=True, null=True)
     # apresentoucertificadocursoindicado = models.BooleanField(blank=True, null=True)
 
-
-
 class Formulario(models.Model):
 
     participante = models.ForeignKey(
-        Participante,
-        on_delete=models.DO_NOTHING)
+        Participante,on_delete=models.DO_NOTHING)
+
+    programa_chapeu_anual = models.ForeignKey(
+        ProgramaChapeuAnual,on_delete=models.DO_NOTHING)
 
     posto_cadastramento = models.ForeignKey(
-        PostoCadastramento,
-        on_delete=models.DO_NOTHING)
+        PostoCadastramento,on_delete=models.DO_NOTHING)
 
-    numero_cartao = models.BigIntegerField()
+    statusrecebimentocartao = models.ForeignKey(
+        Status, models.DO_NOTHING, related_name='formularios_situacao_cartao')
 
-    lote = models.IntegerField()
+    #usuario_inclusao = models.ForeignKey(
+    #   Usuario, models.DO_NOTHING, related_name='formulario_inclusao')
 
-    sublote = models.IntegerField()
+    #usuario_alteracao = models.ForeignKey(
+    #    Usuario, models.DO_NOTHING, related_name='formulatio_alteracao',
+    #    blank=True, null=True)
+
+    #usuario_entregacartao = models.ForeignKey(
+    #    Usuario, models.DO_NOTHING, related_name='formulario_entrega_cartao',
+    #    blank=True, null=True)
+
+    status_rlmds = models.ForeignKey(
+        Status, models.DO_NOTHING, related_name='formulario_rlmds')
+
+    status_rlmdsdup = models.ForeignKey(
+        Status, models.DO_NOTHING, related_name='formulario_rlmdsdup')
+
+    ##Dados do cartão
 
     data_recebimento_cartao = models.DateTimeField(
         blank=True, null=True)
 
-    data_inclusao = models.DateTimeField()
+    numero_cartao = models.BigIntegerField()
 
-    data_alteracao = models.DateTimeField(
-        blank=True, null=True)
-
-    observacao = models.TextField(
-        blank=True, null=True)
-
-    cartao_inicializado = models.BooleanFieldField(
+    cartao_inicializado = models.BooleanField(
         blank=True, null=True)
 
     data_cartao_inicializado = models.DateTimeField(
         blank=True, null=True)
-
+    #Dados NIS
     nis_rl_familia = models.CharField(
         max_length=15, blank=True, null=True)
 
@@ -185,36 +195,27 @@ class Formulario(models.Model):
     nis_rl_familia_dt_atual = models.DateTimeField(
         blank=True, null=True)
 
+    ##Dados formulario
+    lote = models.IntegerField()
+
+    sublote = models.IntegerField()
+
+    data_inclusao = models.DateTimeField()
+
+    data_alteracao = models.DateTimeField(
+        blank=True, null=True)
+
+    observacao = models.TextField(
+        blank=True, null=True)
+
     tempo_cadastro = models.BigIntegerField(
         blank=True, null=True)
 
-    status_participante = models.ForeignKey(
-        Status, models.DO_NOTHING)
-
-    statusrecebimentocartao = models.ForeignKey(
-        Status, models.DO_NOTHING,related_name='formularios_situacao_cartao')
-
-    usuario_inclusao = models.ForeignKey(
-        Usuario, models.DO_NOTHING,related_name='formulario_inclusao')
-
-    usuario_alteracao = models.ForeignKey(
-        Usuario, models.DO_NOTHING, related_name='formulatio_alteracao', blank=True, null=True)
-
-    usuario_entregacartao = models.ForeignKey(
-        Usuario, models.DO_NOTHING, related_name='formulario_entrega_cartao', blank=True, null=True)
-
-    status_rlmds = models.ForeignKey(
-        Status, models.DO_NOTHING,related_name='formulario_rlmds')
-
-    status_rlmdsdup = models.ForeignKey(
-        Status, models.DO_NOTHING, related_name='formulario_rlmdsdup')
-
     status = models.ForeignKey(
-        Status, models.DO_NOTHING, related_name='formulario_status')
+        Status, models.DO_NOTHING)
 
     ##Campos descartados##
 
-    #fk_idprogramachapeuanual = models.ForeignKey('Tblprogramachapeuanual', models.DO_NOTHING, db_column='fk_idprogramachapeuanual')
     #fk_idselamento = models.CharField(max_length=50, blank=True, null=True)
     #naoencontradocaixaposfolha = models.IntegerField(blank=True, null=True)
     #idformulariocana14 = models.BigIntegerField(blank=True, null=True)
@@ -248,7 +249,7 @@ class Indicado(models.Model):
     )
 
     telefone = models.CharField(
-        max_length=50, blank=True, null=True)a
+        max_length=50, blank=True, null=True)
 
     celular = models.CharField(
         max_length=15, blank=True, null=True)
@@ -288,7 +289,7 @@ class Indicado(models.Model):
 
     dataalteracao = models.DateTimeField()
 
-    UsuarioAlteracao = models.ForeignKey('Usuario', models.DO_NOTHING)
+    #UsuarioAlteracao = models.ForeignKey('Usuario', models.DO_NOTHING)
 
     enderecomesmoparticipante = models.BooleanField(
         blank=True, null=True)
