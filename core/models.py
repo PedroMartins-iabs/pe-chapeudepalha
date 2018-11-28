@@ -1,10 +1,9 @@
 from django.db import models
 
 class Status(models.Model):
-    tabela = models.CharField(max_length=100)
+    tipo = models.CharField(max_length=100)
     chave  = models.CharField(max_length=100)
     texto  = models.CharField(max_length=200)
-    valor  = models.IntegerField()
     parent = models.IntegerField(default=0)
     ordem = models.IntegerField(default=0)
     label_code= models.IntegerField(default=0)
