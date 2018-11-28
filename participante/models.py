@@ -1,5 +1,5 @@
 from django.db import models
-from user.models import Usuario
+from usuario.models import Usuario
 
 from core.choices import(
     GRAU_ESCOLARIDADE,TURNO_ATIVIDADE_ESCOLAR,RACA,
