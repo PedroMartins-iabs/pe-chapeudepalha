@@ -2,15 +2,18 @@ from django.db import models
 from django.contrib.auth.models import User
 from core.models import Cidade,Bairro
 
+
 class DadosBancarios(models.Model):
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
+    banco_nome = models.CharField(max_length=500, blank=True, null=True)
+    banco_numero = models.CharField(max_length=25, blank=True, null=True)
+    agencia = models.CharField(max_length=50, blank=True, null=True)
+    conta_corrente = models.CharField(max_length=50, blank=True, null=True)
+    operacao = models.CharField(max_length=50, blank=True, null=True)
 
-    agenciabancaria = models.CharField(max_length=50, blank=True, null=True)
-    numerocontabancaria = models.CharField(max_length=50, blank=True, null=True)
-
-    operacaobancaria = models.CharField(max_length=50, blank=True, null=True)
 
 class Usuario(models.Model):
-
+    date_created = models.DateTimeField(auto_now_add=True, null=True)
     bairro = models.ForeignKey(Bairro, models.DO_NOTHING, blank=True, null=True)
     cidade = models.ForeignKey(Cidade, models.DO_NOTHING, blank=True, null=True)
     dados_bancarios = models.ForeignKey(DadosBancarios, models.DO_NOTHING, blank=True, null=True)
